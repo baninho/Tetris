@@ -19,9 +19,9 @@ static const GLuint kVerticesPerCube = 4;
 static const GLint kVposLocation = 0;
 static const GLint kVcolorLocation = 1;
 
-static Cube cubes[2] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
+static Cube cubes[kNumberOfCubes] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
 
-Vertex vertices2[8];
+Vertex vertices2[kNumberOfCubes * kVerticesPerCube];
 
 static const char *vertex_shader_text =
     "#version 330 core\n"
@@ -130,8 +130,6 @@ int main(void)
   glfwMakeContextCurrent(window);
   gladLoadGL(glfwGetProcAddress);
   glfwSwapInterval(1);
-
-  // NOTE: OpenGL error checks have been omitted for brevity
   
   // get version info
   const GLubyte *renderer = glGetString(GL_RENDERER); // get renderer string
@@ -205,7 +203,7 @@ int main(void)
     glUseProgram(program);
     glBindVertexArray(vertex_array);
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(vertices2)/sizeof(vertices2[0]));
 
     glfwSwapBuffers(window);
     glfwPollEvents();
