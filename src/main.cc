@@ -11,6 +11,8 @@
 
 #include <common.h>
 #include <cube.h>
+#include <game.h>
+#include <shader.h>
 
 static const GLfloat kxMove = .1f;
 static const GLfloat kyMove = .1f;
@@ -18,10 +20,6 @@ static const GLuint kMaxCubes = 100, kNumberOfCubes = 2;
 static const GLuint kVerticesPerCube = 4;
 static const GLint kVposLocation = 0;
 static const GLint kVcolorLocation = 1;
-
-static Cube cubes[kNumberOfCubes] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
-
-Vertex vertices2[kNumberOfCubes * kVerticesPerCube];
 
 static const char *vertex_shader_text =
     "#version 330 core\n"
@@ -43,6 +41,9 @@ static const char *fragment_shader_text =
     "{\n"
     "   FragColor = vec4(color, 1.0f);\n"
     "}\n";
+
+Cube cubes[kNumberOfCubes] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
+Vertex vertices2[kNumberOfCubes * kVerticesPerCube];
 
 void updateVertexBuffer()
 {
@@ -106,6 +107,8 @@ int main(void)
   GLuint vertex_buffer, vertex_shader, vertex_array, fragment_shader, program;
   GLint mvp_location, success;
   GLchar info_log[512];
+  std::string vertex_path = "../shaders/vertex330.glsl";
+  std::string fragment_path = "../shaders/fragment330.glsl";
 
   glfwSetErrorCallback(error_callback);
 
@@ -130,12 +133,14 @@ int main(void)
   glfwMakeContextCurrent(window);
   gladLoadGL(glfwGetProcAddress);
   glfwSwapInterval(1);
-  
+
   // get version info
   const GLubyte *renderer = glGetString(GL_RENDERER); // get renderer string
   const GLubyte *version = glGetString(GL_VERSION);   // version as a string
   printf("Renderer: %s\n", renderer);
   printf("OpenGL version supported %s\n", version);
+
+  Shader shader(vertex_path, fragment_path);
 
   updateVertexBuffer();
   
@@ -145,36 +150,7 @@ int main(void)
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_DYNAMIC_DRAW);
 
-  vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
-  glCompileShader(vertex_shader);
-
-  // check if vertex shader was created
-  glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
-  if (!success)
-  {
-    glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
-    fprintf(stderr, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", info_log);
-  }
-
-  fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
-  glCompileShader(fragment_shader);
-
-  // check if fragment shader was created
-  glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
-  if (!success)
-  {
-    glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
-    fprintf(stderr, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", info_log);
-  }
-
-  program = glCreateProgram();
-  glAttachShader(program, vertex_shader);
-  glAttachShader(program, fragment_shader);
-  glLinkProgram(program);
-
-  mvp_location = glGetUniformLocation(program, "MVP");
+  mvp_location = glGetUniformLocation(shader.program_id, "MVP");
 
   glEnableVertexAttribArray(kVposLocation);
   glVertexAttribPointer(kVposLocation, 2, GL_FLOAT, GL_FALSE,
@@ -200,7 +176,7 @@ int main(void)
     mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
     mat4x4_mul(mvp, p, m);
 
-    glUseProgram(program);
+    shader.use();
     glBindVertexArray(vertex_array);
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(vertices2)/sizeof(vertices2[0]));
