@@ -15,6 +15,8 @@
 #include <resource_manager.h>
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
@@ -91,6 +93,7 @@ int main(int argc, char *argv[])
     Tetris.Render();
 
     glfwSwapBuffers(window);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
 
   // delete all resources as loaded using the resource manager

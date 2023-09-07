@@ -32,6 +32,8 @@ void Game::Init()
   Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
   // load textures
   ResourceManager::LoadTexture("../textures/awesomeface.png", true, "face");
+  ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
+  ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
 }
 
 void Game::Update(float dt)
@@ -44,5 +46,5 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 {
-  Renderer->DrawSprite(ResourceManager::GetTexture("face"), glm::vec2(200.0f, 200.0f), glm::vec2(300.0f, 400.0f), 45.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+  Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
 }
