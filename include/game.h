@@ -13,9 +13,11 @@
 
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
+#include <vector>
 
 #include <resource_manager.h>
 #include <sprite_renderer.h>
+#include <gameobject.h>
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
 
@@ -40,6 +42,7 @@ public:
   GameState State;
   bool Keys[1024];
   unsigned int Width, Height;
+  std::vector<GameObject> objects;
   // constructor/destructor
   Game(unsigned int width, unsigned int height);
   ~Game();

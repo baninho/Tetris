@@ -11,7 +11,7 @@
 #include <game.h>
 
 Game::Game(unsigned int width, unsigned int height)
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
+    : State(GAME_ACTIVE), Keys(), Width(width), Height(height), objects(std::vector<GameObject>())
 {
 }
 
@@ -34,6 +34,9 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/awesomeface.png", true, "face");
   ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
+  ResourceManager::LoadTexture("../textures/block.png", false, "block");
+
+  this->objects.push_back(GameObject(glm::vec2(100.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f)));
 }
 
 void Game::Update(float dt)
@@ -47,4 +50,8 @@ void Game::ProcessInput(float dt)
 void Game::Render()
 {
   Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
+  for (auto o : this->objects)
+  {
+    o.Draw(*Renderer);
+  }
 }
