@@ -27,6 +27,7 @@ void Cube::MoveY(float y_offset)
 
 void Cube::UpdateVertices()
 {
+  this->vertices_.clear();
   Vertex temp_[4] =
       {{this->x_position_, this->y_position_, 0.f, 1.f, 0.f},
        {this->x_position_, this->y_position_ - this->length_, 1.f, 0.f, 0.f},
