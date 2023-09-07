@@ -21,27 +21,6 @@ static const GLuint kVerticesPerCube = 4;
 static const GLint kVposLocation = 0;
 static const GLint kVcolorLocation = 1;
 
-static const char *vertex_shader_text =
-    "#version 330 core\n"
-    "uniform mat4 MVP;\n"
-    "layout (location = 1) in vec3 vCol;\n"
-    "layout (location = 0) in vec2 vPos;\n"
-    "out vec3 color;\n"
-    "void main()\n"
-    "{\n"
-    "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
-    "    color = vCol;\n"
-    "}\n";
-
-static const char *fragment_shader_text =
-    "#version 330 core\n"
-    "in vec3 color;\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(color, 1.0f);\n"
-    "}\n";
-
 Cube cubes[kNumberOfCubes] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
 Vertex vertices2[kNumberOfCubes * kVerticesPerCube];
 
