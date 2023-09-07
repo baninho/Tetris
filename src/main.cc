@@ -16,13 +16,15 @@ static const GLfloat kxMove = .1f;
 static const GLfloat kyMove = .1f;
 static const GLuint kMaxCubes = 100;
 static const GLuint kVerticesPerCube = 4;
+static const GLint kVposLocation = 0;
+static const GLint kVcolorLocation = 1;
 
 static const char *vertex_shader_text =
-    "#version 110\n"
+    "#version 330 core\n"
     "uniform mat4 MVP;\n"
-    "attribute vec3 vCol;\n"
-    "attribute vec2 vPos;\n"
-    "varying vec3 color;\n"
+    "layout (location = 1) in vec3 vCol;\n"
+    "layout (location = 0) in vec2 vPos;\n"
+    "out vec3 color;\n"
     "void main()\n"
     "{\n"
     "    gl_Position = MVP * vec4(vPos, 0.0, 1.0);\n"
@@ -30,11 +32,12 @@ static const char *vertex_shader_text =
     "}\n";
 
 static const char *fragment_shader_text =
-    "#version 110\n"
-    "varying vec3 color;\n"
+    "#version 330 core\n"
+    "in vec3 color;\n"
+    "out vec4 FragColor;\n"
     "void main()\n"
     "{\n"
-    "    gl_FragColor = vec4(color, 1.0);\n"
+    "   FragColor = vec4(color, 1.0f);\n"
     "}\n";
 
 static Cube cubes[2] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
@@ -85,20 +88,21 @@ int main(void)
 {
   GLFWwindow *window;
   GLuint vertex_buffer, vertex_shader, vertex_array, fragment_shader, program;
-  GLint mvp_location, vpos_location, vcol_location;
+  GLint mvp_location, success;
   Vertex vertices2[8];
-
-  printf("vertices2[0].x: %f \n", vertices2[0].x);
+  GLchar info_log[512];
 
   glfwSetErrorCallback(error_callback);
 
   if (!glfwInit())
     exit(EXIT_FAILURE);
 
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
-  window = glfwCreateWindow(600, 1200, "Tetris", NULL, NULL);
+  window = glfwCreateWindow(600, 800, "Tetris", NULL, NULL);
   if (!window)
   {
     glfwTerminate();
@@ -130,8 +134,8 @@ int main(void)
   }
   
   glGenBuffers(1, &vertex_buffer);
-  //glGenVertexArrays(1, &vertex_array);
-  //glBindVertexArray(vertex_array);
+  glGenVertexArrays(1, &vertex_array);
+  glBindVertexArray(vertex_array);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
 
@@ -139,9 +143,25 @@ int main(void)
   glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
   glCompileShader(vertex_shader);
 
+  // check if vertex shader was created
+  glGetShaderiv(vertex_shader, GL_COMPILE_STATUS, &success);
+  if (!success)
+  {
+    glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
+    fprintf(stderr, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", info_log);
+  }
+
   fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
   glShaderSource(fragment_shader, 1, &fragment_shader_text, NULL);
   glCompileShader(fragment_shader);
+
+  // check if fragment shader was created
+  glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &success);
+  if (!success)
+  {
+    glGetShaderInfoLog(vertex_shader, 512, NULL, info_log);
+    fprintf(stderr, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", info_log);
+  }
 
   program = glCreateProgram();
   glAttachShader(program, vertex_shader);
@@ -149,14 +169,12 @@ int main(void)
   glLinkProgram(program);
 
   mvp_location = glGetUniformLocation(program, "MVP");
-  vpos_location = glGetAttribLocation(program, "vPos");
-  vcol_location = glGetAttribLocation(program, "vCol");
 
-  glEnableVertexAttribArray(vpos_location);
-  glVertexAttribPointer(vpos_location, 2, GL_FLOAT, GL_FALSE,
+  glEnableVertexAttribArray(kVposLocation);
+  glVertexAttribPointer(kVposLocation, 2, GL_FLOAT, GL_FALSE,
                         sizeof(vertices2[0]), (void *)0);
-  glEnableVertexAttribArray(vcol_location);
-  glVertexAttribPointer(vcol_location, 3, GL_FLOAT, GL_FALSE,
+  glEnableVertexAttribArray(kVcolorLocation);
+  glVertexAttribPointer(kVcolorLocation, 3, GL_FLOAT, GL_FALSE,
                         sizeof(vertices2[0]), (void *)(sizeof(float) * 2));
 
   while (!glfwWindowShouldClose(window))
@@ -178,6 +196,7 @@ int main(void)
     mat4x4_translate_in_place(mvp, move_x*kxMove, move_y*kyMove, .0f);
 
     glUseProgram(program);
+    glBindVertexArray(vertex_array);
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
 
