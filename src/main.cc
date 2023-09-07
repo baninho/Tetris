@@ -68,26 +68,26 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
   if (key == GLFW_KEY_ESCAPE)
   {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
-    (void)printf("Window closed by ESC Key\n");
+    printf("Window closed by ESC Key\n");
   }
   if (key == GLFW_KEY_A)
   {
-    (void)printf("A press\n");
+    printf("A press\n");
     cubes[0].MoveX(-kxMove);
   }
   if (key == GLFW_KEY_D)
   {
-    (void)printf("D press\n");
+    printf("D press\n");
     cubes[0].MoveX(kxMove);
   }
   if (key == GLFW_KEY_W)
   {
-    (void)printf("W press\n");
+    printf("W press\n");
     cubes[0].MoveY(kyMove);
   }
   if (key == GLFW_KEY_S)
   {
-    (void)printf("S press\n");
+    printf("S press\n");
     cubes[0].MoveY(-kyMove);
   }
 
