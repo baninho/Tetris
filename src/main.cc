@@ -14,10 +14,14 @@
 
 static const GLfloat kxMove = .1f;
 static const GLfloat kyMove = .1f;
-static const GLuint kMaxCubes = 100;
+static const GLuint kMaxCubes = 100, kNumberOfCubes = 2;
 static const GLuint kVerticesPerCube = 4;
 static const GLint kVposLocation = 0;
 static const GLint kVcolorLocation = 1;
+
+static Cube cubes[2] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
+
+Vertex vertices2[8];
 
 static const char *vertex_shader_text =
     "#version 330 core\n"
@@ -40,9 +44,18 @@ static const char *fragment_shader_text =
     "   FragColor = vec4(color, 1.0f);\n"
     "}\n";
 
-static Cube cubes[2] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
-static GLint move_x = 0;
-static GLint move_y = 0;
+void updateVertexBuffer()
+{
+  for (int j = 0; j < kNumberOfCubes; j++)
+  {
+    std::vector<Vertex> temp_ = cubes[j].get_vertices();
+    for (int i = 0; i < kVerticesPerCube; i++)
+    {
+      vertices2[i + j * kVerticesPerCube] = temp_[i];
+    }
+  }
+  glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices2), vertices2);
+}
 
 static void error_callback(int error, const char *description)
 {
@@ -51,31 +64,34 @@ static void error_callback(int error, const char *description)
 
 static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+  if (action != GLFW_PRESS) return;
+  if (key == GLFW_KEY_ESCAPE)
   {
     glfwSetWindowShouldClose(window, GLFW_TRUE);
     (void)printf("Window closed by ESC Key\n");
   }
-  if (key == GLFW_KEY_A && action == GLFW_PRESS)
+  if (key == GLFW_KEY_A)
   {
     (void)printf("A press\n");
-    move_x--;
+    cubes[0].MoveX(-kxMove);
   }
-  if (key == GLFW_KEY_D && action == GLFW_PRESS)
+  if (key == GLFW_KEY_D)
   {
     (void)printf("D press\n");
-    move_x++;
+    cubes[0].MoveX(kxMove);
   }
-  if (key == GLFW_KEY_W && action == GLFW_PRESS)
+  if (key == GLFW_KEY_W)
   {
     (void)printf("W press\n");
-    move_y++;
+    cubes[0].MoveY(kyMove);
   }
-  if (key == GLFW_KEY_S && action == GLFW_PRESS)
+  if (key == GLFW_KEY_S)
   {
     (void)printf("S press\n");
-    move_y--;
+    cubes[0].MoveY(-kyMove);
   }
+
+  updateVertexBuffer();
 }
 
 static void error_callback(int error, char * desc) 
@@ -89,7 +105,6 @@ int main(void)
   GLFWwindow *window;
   GLuint vertex_buffer, vertex_shader, vertex_array, fragment_shader, program;
   GLint mvp_location, success;
-  Vertex vertices2[8];
   GLchar info_log[512];
 
   glfwSetErrorCallback(error_callback);
@@ -124,20 +139,13 @@ int main(void)
   printf("Renderer: %s\n", renderer);
   printf("OpenGL version supported %s\n", version);
 
-  for (int j = 0; j < 2; j++) 
-  {
-    std::vector<Vertex> temp_ = cubes[j].get_vertices();
-    for (int i = 0; i < kVerticesPerCube; i++)
-    {
-      vertices2[i + j * kVerticesPerCube] = temp_[i];
-    }
-  }
+  updateVertexBuffer();
   
   glGenBuffers(1, &vertex_buffer);
   glGenVertexArrays(1, &vertex_array);
   glBindVertexArray(vertex_array);
   glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_DYNAMIC_DRAW);
 
   vertex_shader = glCreateShader(GL_VERTEX_SHADER);
   glShaderSource(vertex_shader, 1, &vertex_shader_text, NULL);
@@ -193,7 +201,6 @@ int main(void)
     mat4x4_identity(m);
     mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
     mat4x4_mul(mvp, p, m);
-    mat4x4_translate_in_place(mvp, move_x*kxMove, move_y*kyMove, .0f);
 
     glUseProgram(program);
     glBindVertexArray(vertex_array);
