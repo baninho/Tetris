@@ -14,6 +14,11 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 
+#include <resource_manager.h>
+#include <sprite_renderer.h>
+#include "../glm/glm.hpp"
+#include "../glm/gtc/matrix_transform.hpp"
+
 // Represents the current state of the game
 enum GameState
 {
@@ -27,6 +32,9 @@ enum GameState
 // easy access to each of the components and manageability.
 class Game
 {
+private:
+  SpriteRenderer *Renderer;
+
 public:
   // game state
   GameState State;
