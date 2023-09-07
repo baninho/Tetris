@@ -18,8 +18,6 @@ static const GLfloat kxMove = .1f;
 static const GLfloat kyMove = .1f;
 static const GLuint kMaxCubes = 100, kNumberOfCubes = 2;
 static const GLuint kVerticesPerCube = 4;
-static const GLint kVposLocation = 0;
-static const GLint kVcolorLocation = 1;
 
 Cube cubes[kNumberOfCubes] = {Cube(-.05f, .05f, .06f), Cube(.01f, .05f, .06f)};
 Vertex vertices2[kNumberOfCubes * kVerticesPerCube];
@@ -155,7 +153,7 @@ int main(void)
     mat4x4_ortho(p, -ratio, ratio, -1.f, 1.f, 1.f, -1.f);
     mat4x4_mul(mvp, p, m);
 
-    shader.use();
+    shader.Use();
     glBindVertexArray(vertex_array);
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, (const GLfloat *)mvp);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, sizeof(vertices2)/sizeof(vertices2[0]));

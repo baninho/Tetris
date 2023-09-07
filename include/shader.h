@@ -21,8 +21,9 @@ public:
 
   // constructor reads and builds the shader
   Shader(std::string vertexPath, std::string fragmentPath);
+  Shader();
   // use/activate the shader
-  void use();
+  Shader & Use();
   // utility uniform functions
   void setBool(const std::string &name, bool value) const;
   void setInt(const std::string &name, int value) const;
