@@ -33,5 +33,4 @@ void GameObject::Update(float dt)
     return;
   } 
   this->Position.y += this->Velocity.y * dt;
-  printf("dt: %f\nposition.y: %f\nvelocity.y: %f\n", dt, this->Position.y, this->Velocity.y);
 }
