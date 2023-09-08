@@ -63,6 +63,7 @@ public:
   static bool CubeInCompletedRow(GameObject &cube);
   void CheckRowsForCompletion();
   void ClearCompletedRows();
+  TetrominoShape RandomShape();
 };
 
 #endif

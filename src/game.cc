@@ -50,7 +50,7 @@ void Game::ProcessInput(float dt)
   if (this->Keys[GLFW_KEY_SPACE] && this->State == GAME_MENU)
   {
     this->State = GAME_ACTIVE;
-    this->tetromino.Spawn(TETRO_J);
+    this->tetromino.Spawn(this->RandomShape());
   }
   if (this->Keys[GLFW_KEY_S]) 
   {
@@ -118,7 +118,7 @@ void Game::HandleCollisions()
       this->CheckRowsForCompletion();
       this->ClearCompletedRows();
 
-      this->tetromino = Tetromino((TetrominoShape)(rand() % (int)(TETRO_Z + 1)));
+      this->tetromino = Tetromino(this->RandomShape());
       return;
     } 
   }
@@ -196,4 +196,9 @@ void Game::CheckRowsForCompletion()
 void Game::ClearCompletedRows()
 {
   std::erase_if(this->cubes, Game::CubeInCompletedRow);
+}
+
+TetrominoShape Game::RandomShape()
+{
+  return (TetrominoShape)(rand() % (int)(TETRO_Z + 1));
 }
