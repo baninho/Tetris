@@ -31,9 +31,7 @@ void Game::Init()
   // set render-specific controls
   renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
   // load textures
-  ResourceManager::LoadTexture("../textures/awesomeface.png", true, "face");
   ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
-  ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
   this->tetromino.Spawn(TETRO_O);
