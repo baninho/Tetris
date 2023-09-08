@@ -29,6 +29,7 @@ public:
   glm::vec3 Color;
   float Rotation;
   int Row;
+  bool CompletedRow;
   // render state
   Texture2D Sprite;
   // constructor(s)

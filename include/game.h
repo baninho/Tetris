@@ -22,6 +22,7 @@
 #include <tetromino.h>
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
+#include "constants.h"
 
 // Represents the current state of the game
 enum GameState
@@ -48,6 +49,7 @@ public:
   GameState State;
   bool Keys[1024];
   unsigned int Width, Height;
+  static std::vector<int> CompletedRows;
   // constructor/destructor
   Game(unsigned int width, unsigned int height);
   ~Game();
@@ -60,6 +62,9 @@ public:
   void HandleCollisions();
   bool DetectCollision(GameObject object, GameObject other);
   bool CheckPathClear(GameObject object, GameObject other);
+  static bool CubeInCompletedRow(GameObject &cube);
+  void CheckRowsForCompletion();
+  void ClearCompletedRows();
 };
 
 #endif

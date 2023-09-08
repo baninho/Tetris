@@ -14,5 +14,6 @@ static const float TETRO_ACCELERATION = 900.f;
 static const float TETRO_DECELERATION = 1800.f;
 static const float TETRO_MAX_SPEED = 450.f;
 static const int MAX_CUBE_ROWS = 20;
+static const int MAX_CUBE_COLUMNS = 15;
 
 #endif

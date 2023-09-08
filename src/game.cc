@@ -109,10 +109,15 @@ void Game::HandleCollisions()
     {
       this->tetromino.Stop();
       std::vector<GameObject> temp = this->tetromino.get_cubes();
-      for (GameObject cube : temp) 
+      for (GameObject &cube : temp) 
       {
+        cube.Row = round(cube.Position.y / CUBE_SIZE.y);
         this->cubes.push_back(cube);
       }
+
+      this->CheckRowsForCompletion();
+      this->ClearCompletedRows();
+
       this->tetromino = Tetromino((TetrominoShape)(rand() % (int)(TETRO_Z + 1)));
       return;
     } 
@@ -140,4 +145,40 @@ bool Game::CheckPathClear(GameObject object, GameObject other)
   if (object.Position.x < other.Position.x)
     clear_below = clear_below && other.Position.x - object.Position.x > object.Size.x - DELTA_L;
   return clear_below;
+}
+
+bool Game::CubeInCompletedRow(GameObject &cube)
+{
+  return cube.CompletedRow;
+}
+
+void Game::CheckRowsForCompletion()
+{
+  int count[MAX_CUBE_ROWS] =
+      {
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0,
+          0, 0, 0, 0};
+
+  for (GameObject &cube : this->cubes)
+  {
+    count[cube.Row]++;
+  }
+
+  for (int i = 0; i < MAX_CUBE_ROWS; i++)
+  {
+    if (count[i] >= MAX_CUBE_COLUMNS)
+      for (GameObject &cube : this->cubes)
+      {
+        if (cube.Row == i)
+          cube.CompletedRow = true;
+      }
+  }
+}
+
+void Game::ClearCompletedRows()
+{
+  std::erase_if(this->cubes, Game::CubeInCompletedRow);
 }
