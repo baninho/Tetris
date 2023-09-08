@@ -96,11 +96,6 @@ int main(int argc, char *argv[])
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
 
-  for (GameObject o : Tetris.objects)
-  {
-    printf("objects: %f\n", o.Position.y);
-  }
-
   // delete all resources as loaded using the resource manager
   // ---------------------------------------------------------
   ResourceManager::Clear();
@@ -128,4 +123,5 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
   // make sure the viewport matches the new window dimensions; note that width and
   // height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
+  printf("viewport width: %d, height: %d\n", width, height);
 }
