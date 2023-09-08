@@ -173,8 +173,12 @@ void Game::CheckRowsForCompletion()
     {
       for (int j = 0; j < this->cubes.size(); j++)
       {
+        // mark cubes in the row for clearing
         if (this->cubes.at(j).Row == i)
+        {
           this->cubes.at(j).CompletedRow = true;
+        }          
+        // slide the rows above the completed line down
         if (this->cubes.at(j).Row < i) 
         {
           this->cubes.at(j).Row++;
