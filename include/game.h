@@ -14,6 +14,7 @@
 #include <glad/gl.h>
 #include <GLFW/glfw3.h>
 #include <vector>
+#include <stdlib.h>
 
 #include <resource_manager.h>
 #include <sprite_renderer.h>

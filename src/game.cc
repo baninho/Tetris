@@ -107,7 +107,7 @@ void Game::HandleCollisions()
       {
         this->cubes.push_back(cube);
       }
-      this->tetromino = Tetromino(TETRO_O);
+      this->tetromino = Tetromino((TetrominoShape)(rand() % (int)(TETRO_Z + 1)));
       break;
     } 
   }
