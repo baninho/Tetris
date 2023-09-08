@@ -21,52 +21,52 @@ void Tetromino::Spawn(TetrominoShape type)
   switch (type)
   {
   case TETRO_I:
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 120.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_ORANGE, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 120.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL, TETRO_SPEED));
     break;
 
   case TETRO_J:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   case TETRO_L:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   case TETRO_O:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   case TETRO_S:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   case TETRO_T:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   case TETRO_Z:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED, TETRO_SPEED));
     break;
 
   default:
