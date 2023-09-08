@@ -46,6 +46,7 @@ public:
   void Right();
   void Down();
   void Rotate();
+  void SnapToGrid();
 };
 
 #endif

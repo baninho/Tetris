@@ -15,9 +15,9 @@ Tetromino::~Tetromino()
 
 void Tetromino::Render(SpriteRenderer &renderer)
 {
-  for (int i = 0; i < this->cubes.size(); i++)
+  for (GameObject &cube : this->cubes)
   {
-    this->cubes.at(i).Draw(renderer);
+    cube.Draw(renderer);
   }
 }
 
@@ -116,6 +116,15 @@ void Tetromino::Rotate()
   }
 }
 
+void Tetromino::SnapToGrid()
+{
+  for (GameObject &cube : this->cubes)
+  {
+    // snap to grid
+    cube.Position = CUBE_SIZE * round(cube.Position / CUBE_SIZE);
+  }
+}
+
 void Tetromino::Update(float dt)
 {
   if (this->stopped)
@@ -168,12 +177,7 @@ void Tetromino::Update(float dt)
 void Tetromino::Stop()
 {
   this->stopped = true;
-
-  for (int i = 0; i < this->cubes.size(); i++)
-  {
-    // snap to grid
-    this->cubes.at(i).Position = CUBE_SIZE * round(this->cubes.at(i).Position / CUBE_SIZE); 
-  }
+  this->SnapToGrid();
 }
 
 void Tetromino::StopX()
