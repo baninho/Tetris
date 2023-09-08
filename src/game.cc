@@ -52,7 +52,6 @@ void Game::ProcessInput(float dt)
 {
   if (this->Keys[GLFW_KEY_S]) 
   {
-    printf("S pressed\n");
     this->tetromino.Down();
   }
   if (this->Keys[GLFW_KEY_A])
