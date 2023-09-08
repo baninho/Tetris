@@ -37,7 +37,9 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
   this->tetromino.Spawn(TETRO_I);
-  this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 1.f), ResourceManager::GetTexture("background")));
+  this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 100.f), ResourceManager::GetTexture("background"))); // floor
+  this->objects.push_back(GameObject(glm::vec2(-100.0f, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // left wall
+  this->objects.push_back(GameObject(glm::vec2(this->Width, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // right wall
 }
 
 void Game::Update(float dt)
@@ -77,22 +79,39 @@ void Game::HandleCollisions()
 {
   for (GameObject &cube : this->tetromino.get_cubes()) 
   {
+    bool clear_below = true;
+
     for (GameObject &other : this->objects)
     {
       if (this->DetectCollision(cube, other))
       {
-        this->tetromino.Stop();
-        break;
+        this->tetromino.StopX();
+
+        // check overlap
+        if (cube.Position.x > other.Position.x)
+          clear_below = clear_below && cube.Position.x - other.Position.x > other.Size.x - DELTA_L;
+        if (cube.Position.x < other.Position.x)
+          clear_below = clear_below && other.Position.x - cube.Position.x > cube.Size.x - DELTA_L;
       }
     }
     for (GameObject &other : this->cubes)
     {
       if (this->DetectCollision(cube, other))
       {
-        this->tetromino.Stop();
-        break;
+        this->tetromino.StopX();
+
+        // check overlap
+        if (cube.Position.x > other.Position.x)
+          clear_below = clear_below && cube.Position.x - other.Position.x > other.Size.x - DELTA_L;
+        if (cube.Position.x < other.Position.x)
+          clear_below = clear_below && other.Position.x - cube.Position.x > cube.Size.x - DELTA_L;
       }
     }
+
+    if (!clear_below)
+    {
+      this->tetromino.Stop();
+    } 
   }
 }
 

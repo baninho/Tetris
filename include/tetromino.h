@@ -48,6 +48,7 @@ public:
   void Render(SpriteRenderer &renderer);
   void Update(float dt);
   void Stop();
+  void StopX();
   void Spawn(TetrominoShape type);
   std::vector<GameObject> get_cubes();
   void Left();

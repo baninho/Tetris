@@ -149,3 +149,13 @@ void Tetromino::Stop()
     this->cubes.at(i).Position = CUBE_SIZE * round(this->cubes.at(i).Position / CUBE_SIZE); 
   }
 }
+
+void Tetromino::StopX()
+{
+  for (GameObject &cube : this->cubes)
+  {
+    cube.Velocity.x = .0f;
+    // x snap to grid
+    cube.Position.x = CUBE_SIZE.x * round(cube.Position.x / CUBE_SIZE.x);
+  }
+}
