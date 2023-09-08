@@ -11,7 +11,7 @@
 #include <game.h>
 
 Game::Game(unsigned int width, unsigned int height)
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height), objects(std::vector<GameObject>())
+    : State(GAME_ACTIVE), Keys(), Width(width), Height(height), objects(std::vector<GameObject>()), tetromino(Tetromino())
 {
 }
 
@@ -29,42 +29,35 @@ void Game::Init()
   ResourceManager::GetShader("sprite").Use().SetInteger("image", 0);
   ResourceManager::GetShader("sprite").SetMatrix4("projection", projection);
   // set render-specific controls
-  Renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
+  renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
   // load textures
   ResourceManager::LoadTexture("../textures/awesomeface.png", true, "face");
   ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  this->objects.push_back(GameObject(glm::vec2(100.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-  this->objects.push_back(GameObject(glm::vec2(100.0f, 140.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
-  this->objects.push_back(GameObject(glm::vec2(140.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+  tetromino.Spawn("L");
 }
 
 void Game::Update(float dt)
 {
-  for (int i = 0; i < this->objects.size(); i++)
-  {
-    this->objects.at(i).Update(dt);
-  }
+  this->tetromino.Update(dt);
 }
 
 void Game::ProcessInput(float dt)
 {
   if (this->Keys[GLFW_KEY_S]) 
   {
-    for (int i = 0; i < this->objects.size(); i++)
-    {
-      this->objects.at(i).Position.y += this->objects.at(i).Velocity.y * dt;
-    }
+    printf("S pressed\n");
   }
 }
 
 void Game::Render()
 {
-  Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-  for (int i = 0; i < this->objects.size(); i++)
+  renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
+  for (int i = 0; i < this->cubes.size(); i++)
   {
-    this->objects.at(i).Draw(*Renderer);
+    this->cubes.at(i).Draw(*renderer);
   }
+  this->tetromino.Render(*renderer);
 }

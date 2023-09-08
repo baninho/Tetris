@@ -18,6 +18,7 @@
 #include <resource_manager.h>
 #include <sprite_renderer.h>
 #include <gameobject.h>
+#include <tetromino.h>
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
 
@@ -35,7 +36,9 @@ enum GameState
 class Game
 {
 private:
-  SpriteRenderer *Renderer;
+  SpriteRenderer *renderer;
+  std::vector<GameObject> cubes;
+  Tetromino tetromino; 
 
 public:
   // game state
