@@ -88,7 +88,7 @@ void Game::HandleCollisions()
   for (GameObject &cube : this->tetromino.get_cubes()) 
   {
 
-    for (GameObject &other : this->objects)
+    for (GameObject &other : this->objects) // check wall collision
     {
       if (this->DetectCollision(cube, other))
       {
@@ -96,7 +96,7 @@ void Game::HandleCollisions()
         clear_below = clear_below && this->CheckPathClear(cube, other);
       }
     }
-    for (GameObject &other : this->cubes)
+    for (GameObject &other : this->cubes) // check the stack for collision
     {
       if (this->DetectCollision(cube, other))
       {
