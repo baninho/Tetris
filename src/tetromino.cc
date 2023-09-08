@@ -79,19 +79,73 @@ std::vector<GameObject> Tetromino::get_cubes()
   return this->cubes;
 }
 
+void Tetromino::Left()
+{
+this->left = true;
+}
+
+void Tetromino::Right()
+{
+this->right = true;
+}
+
+void Tetromino::Down()
+{
+  this->down = true;
+}
+
 void Tetromino::Update(float dt)
 {
+  if (this->stopped)
+    return;
+
+  if (this->left)
+  {
+    this->velocity.x -= TETRO_ACCELERATION * dt;
+  }
+  else if (this->velocity.x < -10.f)
+  {
+    this->velocity.x += TETRO_DECELERATION * dt;
+  }
+
+  if (this->right)
+  {
+    this->velocity.x += TETRO_ACCELERATION * dt;
+  }
+  else if (this->velocity.x > 10.f)
+  {
+    this->velocity.x -= TETRO_DECELERATION * dt;
+  }
+
+  if (!this->left && !this->right && abs(this->velocity.x) > 0)
+    this->velocity.x = 0;
+
+  if (this->down)
+  {
+    this->velocity.y += TETRO_ACCELERATION * dt;
+  }
+  else if (this->velocity.y > 100.f || this->velocity.y < 100.f)
+  {
+    this->velocity.y = 100.f;
+  }
+
   for (GameObject &cube : this->cubes)
   {
-    cube.Update(dt);
+    cube.Position += this->velocity * dt;
   }
+
+  this->left = false;
+  this->right = false;
+  this->down = false;
 }
 
 void Tetromino::Stop()
 {
   for (int i = 0; i < this->cubes.size(); i++)
   {
+    this->cubes.at(i).Stopped = true;
     this->cubes.at(i).Velocity = glm::vec2(.0f, .0f);
-    this->cubes.at(i).Position.y = CUBE_SIZE.y * floor(this->cubes.at(i).Position.y / CUBE_SIZE.y); // snap to grid
+    // snap to grid
+    this->cubes.at(i).Position = CUBE_SIZE * round(this->cubes.at(i).Position / CUBE_SIZE); 
   }
 }
