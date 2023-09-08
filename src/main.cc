@@ -26,6 +26,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 const unsigned int SCREEN_WIDTH = 600;
 // The height of the screen
 const unsigned int SCREEN_HEIGHT = 800;
+const int FRAME_DELAY = 50;
 
 Game Tetris(SCREEN_WIDTH, SCREEN_HEIGHT);
 int actual_width, actual_height;
@@ -95,7 +96,7 @@ int main(int argc, char *argv[])
     Tetris.Render();
 
     glfwSwapBuffers(window);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(FRAME_DELAY));
   }
 
   // delete all resources as loaded using the resource manager
