@@ -32,8 +32,6 @@ enum GameState
   GAME_WIN
 };
 
-static const float DELTA_L = 10.f;
-
     // Game holds all game-related state and functionality.
     // Combines all game-related data into a single class for
     // easy access to each of the components and manageability.

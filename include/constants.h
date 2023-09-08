@@ -13,6 +13,7 @@ static const glm::vec2 TETRO_SPEED = glm::vec2(.0f, 100.f);
 static const float TETRO_ACCELERATION = 900.f;
 static const float TETRO_DECELERATION = 1800.f;
 static const float TETRO_MAX_SPEED = 450.f;
+static const float DELTA_L = 10.f;
 static const int MAX_CUBE_ROWS = 20;
 static const int MAX_CUBE_COLUMNS = 15;
 

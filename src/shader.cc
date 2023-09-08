@@ -10,8 +10,6 @@
 ******************************************************************/
 #include <shader.h>
 
-#include <iostream>
-
 Shader &Shader::Use()
 {
   glUseProgram(this->ID);

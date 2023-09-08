@@ -11,6 +11,10 @@
 #ifndef RESOURCE_MANAGER_H
 #define RESOURCE_MANAGER_H
 
+#include <iostream>
+#include <sstream>
+#include <fstream>
+
 #include <map>
 #include <string>
 
