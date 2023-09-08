@@ -4,7 +4,7 @@ Tetromino::Tetromino()
 {
 }
 
-Tetromino::Tetromino(TetrominoShape shape)
+Tetromino::Tetromino(TetrominoShape shape) : shape(shape)
 {
   this->Spawn(shape);
 }
@@ -26,9 +26,9 @@ void Tetromino::Spawn(TetrominoShape shape)
   switch (shape)
   {
   case TETRO_I:
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_ORANGE));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 120.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
     break;
 
@@ -97,6 +97,23 @@ this->right = true;
 void Tetromino::Down()
 {
   this->down = true;
+}
+
+void Tetromino::Rotate()
+{
+  float x = cubes.at(1).Position.x;
+  float y = cubes.at(1).Position.y;
+
+  glm::mat4 m = glm::mat4(1.0f);
+
+  m = glm::translate(m, glm::vec3(x, y, .0f));
+  m = glm::rotate(m, glm::radians(90.f), glm::vec3(0.0f, 0.0f, 1.0f));
+  m = glm::translate(m, glm::vec3(-x, -y, .0f));
+
+  for (GameObject &cube : this->cubes)
+  {
+    cube.Position = m * glm::vec4(cube.Position, .0f, 1.f);
+  }
 }
 
 void Tetromino::Update(float dt)

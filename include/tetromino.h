@@ -42,6 +42,7 @@ private:
   std::vector<GameObject> cubes;
   bool left, right, down, stopped;
   glm::vec2 velocity;
+  TetrominoShape shape;
 
 public:
   Tetromino();
@@ -56,6 +57,7 @@ public:
   void Left();
   void Right();
   void Down();
+  void Rotate();
 };
 
 #endif

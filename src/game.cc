@@ -64,6 +64,11 @@ void Game::ProcessInput(float dt)
   {
     this->tetromino.Right();
   }
+  if (this->Keys[GLFW_KEY_W])
+  {
+    this->Keys[GLFW_KEY_W] = false;
+    this->tetromino.Rotate();
+  }
 }
 
 void Game::Render()
