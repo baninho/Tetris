@@ -16,6 +16,7 @@
 
 #include "texture.h"
 #include "sprite_renderer.h"
+#include "constants.h"
 
 // Container object for holding all state relevant for a single
 // game object entity. Each object in the game likely needs the
@@ -27,6 +28,7 @@ public:
   glm::vec2 Position, Size;
   glm::vec3 Color;
   float Rotation;
+  int Row;
   // render state
   Texture2D Sprite;
   // constructor(s)
