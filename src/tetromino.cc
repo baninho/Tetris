@@ -150,7 +150,6 @@ void Tetromino::Update(float dt)
 
 void Tetromino::Stop()
 {
-  printf("tetro stop\n");
   this->stopped = true;
 
   for (int i = 0; i < this->cubes.size(); i++)
