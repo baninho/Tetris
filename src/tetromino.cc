@@ -18,10 +18,9 @@ void Tetromino::Render(SpriteRenderer &renderer)
 
 void Tetromino::Spawn(TetrominoShape type)
 {
-  switch (type) // I J L O S T Z
+  switch (type)
   {
   case TETRO_I:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
@@ -29,7 +28,6 @@ void Tetromino::Spawn(TetrominoShape type)
     break;
 
   case TETRO_J:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
@@ -37,7 +35,6 @@ void Tetromino::Spawn(TetrominoShape type)
     break;
 
   case TETRO_L:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
@@ -52,7 +49,6 @@ void Tetromino::Spawn(TetrominoShape type)
     break;
 
   case TETRO_S:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
@@ -60,7 +56,6 @@ void Tetromino::Spawn(TetrominoShape type)
     break;
 
   case TETRO_T:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
@@ -68,7 +63,6 @@ void Tetromino::Spawn(TetrominoShape type)
     break;
 
   case TETRO_Z:
-    /* code */
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
