@@ -88,5 +88,6 @@ void Tetromino::Stop()
   for (int i = 0; i < this->cubes.size(); i++)
   {
     this->cubes.at(i).Velocity = glm::vec2(.0f, .0f);
+    this->cubes.at(i).Position.y = CUBE_SIZE.y * floor(this->cubes.at(i).Position.y / CUBE_SIZE.y); // snap to grid
   }
 }
