@@ -44,6 +44,7 @@ public:
   void Update(float dt);
   void Stop();
   void Spawn(TetrominoShape type);
+  std::vector<GameObject> get_cubes();
 };
 
 #endif

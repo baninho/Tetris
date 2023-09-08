@@ -74,12 +74,16 @@ void Tetromino::Spawn(TetrominoShape type)
   }
 }
 
+std::vector<GameObject> Tetromino::get_cubes()
+{
+  return this->cubes;
+}
+
 void Tetromino::Update(float dt)
 {
-  for (int i = 0; i < this->cubes.size(); i++)
+  for (GameObject &cube : this->cubes)
   {
-    this->cubes.at(i).Update(dt);
-    if (this->cubes.at(i).DetectCollision()) this->Stop();
+    cube.Update(dt);
   }
 }
 

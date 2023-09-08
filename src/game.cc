@@ -11,7 +11,7 @@
 #include <game.h>
 
 Game::Game(unsigned int width, unsigned int height)
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height), objects(std::vector<GameObject>()), tetromino(Tetromino())
+    : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
 {
 }
 
@@ -36,12 +36,14 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  tetromino.Spawn(TETRO_I);
+  this->tetromino.Spawn(TETRO_I);
+  this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 1.f), ResourceManager::GetTexture("background")));
 }
 
 void Game::Update(float dt)
 {
   this->tetromino.Update(dt);
+  this->HandleCollisions();
 }
 
 void Game::ProcessInput(float dt)
@@ -60,4 +62,39 @@ void Game::Render()
     this->cubes.at(i).Draw(*renderer);
   }
   this->tetromino.Render(*renderer);
+}
+
+void Game::HandleCollisions()
+{
+  for (GameObject &cube : this->tetromino.get_cubes()) 
+  {
+    for (GameObject &other : this->objects)
+    {
+      if (this->DetectCollision(cube, other))
+      {
+        this->tetromino.Stop();
+        break;
+      }
+    }
+    for (GameObject &other : this->cubes)
+    {
+      if (this->DetectCollision(cube, other))
+      {
+        this->tetromino.Stop();
+        break;
+      }
+    }
+  }
+}
+
+bool Game::DetectCollision(GameObject object, GameObject other)
+{
+  // collision x-axis?
+  bool collisionX = object.Position.x + object.Size.x >= other.Position.x &&
+                    other.Position.x + other.Size.x >= object.Position.x;
+  // collision y-axis?
+  bool collisionY = object.Position.y + object.Size.y >= other.Position.y &&
+                    other.Position.y + other.Size.y >= object.Position.y;
+  // collision only if on both axes
+  return collisionX && collisionY;
 }

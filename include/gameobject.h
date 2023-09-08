@@ -37,7 +37,6 @@ public:
   // draw sprite
   virtual void Draw(SpriteRenderer &renderer);
   void Update(float dt);
-  bool DetectCollision();
 };
 
 #endif

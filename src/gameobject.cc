@@ -29,9 +29,3 @@ void GameObject::Update(float dt)
 {
   this->Position.y += this->Velocity.y * dt;
 }
-
-bool GameObject::DetectCollision()
-{
-  if (this->Position.y + this->Size.y >= 800) return true;
-  return false;
-}
