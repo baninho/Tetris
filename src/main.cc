@@ -28,6 +28,7 @@ const unsigned int SCREEN_WIDTH = 600;
 const unsigned int SCREEN_HEIGHT = 800;
 
 Game Tetris(SCREEN_WIDTH, SCREEN_HEIGHT);
+int actual_width, actual_height;
 
 int main(int argc, char *argv[])
 {
@@ -53,10 +54,11 @@ int main(int argc, char *argv[])
 
   glfwSetKeyCallback(window, key_callback);
   glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+  glfwGetFramebufferSize(window, &actual_width, &actual_height);
 
   // OpenGL configuration
   // --------------------
-  glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+  glViewport(0, 0, actual_width, actual_height);
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -123,5 +125,4 @@ void framebuffer_size_callback(GLFWwindow *window, int width, int height)
   // make sure the viewport matches the new window dimensions; note that width and
   // height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
-  printf("viewport width: %d, height: %d\n", width, height);
 }
