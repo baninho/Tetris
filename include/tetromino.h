@@ -10,6 +10,17 @@
 #include <string>
 #include <vector>
 
+enum TetrominoShape
+{
+  TETRO_I,
+  TETRO_J,
+  TETRO_L,
+  TETRO_O,
+  TETRO_S,
+  TETRO_T,
+  TETRO_Z
+};
+
 class Tetromino 
 {
 private:
@@ -18,8 +29,9 @@ public:
   Tetromino();
   ~Tetromino();
   void Render(SpriteRenderer &renderer);
-  void Spawn(std::string type);
   void Update(float dt);
+  void Stop();
+  void Spawn(TetrominoShape type);
 };
 
 #endif

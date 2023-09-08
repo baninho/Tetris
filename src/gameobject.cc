@@ -27,10 +27,11 @@ void GameObject::Draw(SpriteRenderer &renderer)
 
 void GameObject::Update(float dt)
 {
-  if (this->Position.y >= 760.f)
-  {
-    this->Velocity.y = 0;
-    return;
-  } 
   this->Position.y += this->Velocity.y * dt;
+}
+
+bool GameObject::DetectCollision()
+{
+  if (this->Position.y + this->Size.y >= 800) return true;
+  return false;
 }

@@ -36,7 +36,7 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  tetromino.Spawn("L");
+  tetromino.Spawn(TETRO_I);
 }
 
 void Game::Update(float dt)
