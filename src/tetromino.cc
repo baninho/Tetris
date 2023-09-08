@@ -120,7 +120,6 @@ void Tetromino::SnapToGrid()
 {
   for (GameObject &cube : this->cubes)
   {
-    // snap to grid
     cube.Position = CUBE_SIZE * round(cube.Position / CUBE_SIZE);
   }
 }
