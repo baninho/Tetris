@@ -129,6 +129,10 @@ void Tetromino::Update(float dt)
     this->velocity.y = 100.f;
   }
 
+  // limit speed to prevent clipping
+  this->velocity = glm::min(this->velocity, glm::vec2(TETRO_MAX_SPEED));
+  this->velocity = glm::max(this->velocity, glm::vec2(-TETRO_MAX_SPEED));
+
   for (GameObject &cube : this->cubes)
   {
     cube.Position += this->velocity * dt;
@@ -141,6 +145,8 @@ void Tetromino::Update(float dt)
 
 void Tetromino::Stop()
 {
+  this->stopped = true;
+
   for (int i = 0; i < this->cubes.size(); i++)
   {
     this->cubes.at(i).Stopped = true;
@@ -152,9 +158,10 @@ void Tetromino::Stop()
 
 void Tetromino::StopX()
 {
+  this->velocity.x = .0f;
+
   for (GameObject &cube : this->cubes)
   {
-    cube.Velocity.x = .0f;
     // x snap to grid
     cube.Position.x = CUBE_SIZE.x * round(cube.Position.x / CUBE_SIZE.x);
   }

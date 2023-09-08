@@ -36,7 +36,7 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  this->tetromino.Spawn(TETRO_I);
+  this->tetromino.Spawn(TETRO_O);
   this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 100.f), ResourceManager::GetTexture("background"))); // floor
   this->objects.push_back(GameObject(glm::vec2(-100.0f, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // left wall
   this->objects.push_back(GameObject(glm::vec2(this->Width, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // right wall
