@@ -88,12 +88,17 @@ int main(int argc, char *argv[])
 
     // render
     // ------
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     Tetris.Render();
 
     glfwSwapBuffers(window);
-    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+  }
+
+  for (GameObject o : Tetris.objects)
+  {
+    printf("objects: %f\n", o.Position.y);
   }
 
   // delete all resources as loaded using the resource manager

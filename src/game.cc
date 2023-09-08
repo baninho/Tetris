@@ -36,22 +36,35 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/birnen.jpg", false, "birnen");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  this->objects.push_back(GameObject(glm::vec2(100.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f)));
+  this->objects.push_back(GameObject(glm::vec2(100.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+  this->objects.push_back(GameObject(glm::vec2(100.0f, 140.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
+  this->objects.push_back(GameObject(glm::vec2(140.0f, 100.0f), glm::vec2(40.0f, 40.0f), ResourceManager::GetTexture("block"), glm::vec3(1.0f, .0f, .0f), glm::vec2(.0f, 100.f)));
 }
 
 void Game::Update(float dt)
 {
+  for (int i = 0; i < this->objects.size(); i++)
+  {
+    this->objects.at(i).Update(dt);
+  }
 }
 
 void Game::ProcessInput(float dt)
 {
+  if (this->Keys[GLFW_KEY_S]) 
+  {
+    for (int i = 0; i < this->objects.size(); i++)
+    {
+      this->objects.at(i).Position.y += this->objects.at(i).Velocity.y * dt;
+    }
+  }
 }
 
 void Game::Render()
 {
   Renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-  for (auto o : this->objects)
+  for (int i = 0; i < this->objects.size(); i++)
   {
-    o.Draw(*Renderer);
+    this->objects.at(i).Draw(*Renderer);
   }
 }
