@@ -83,9 +83,10 @@ void Game::Render()
 
 void Game::HandleCollisions()
 {
+  bool clear_below = true;
+
   for (GameObject &cube : this->tetromino.get_cubes()) 
   {
-    bool clear_below = true;
 
     for (GameObject &other : this->objects)
     {
@@ -113,7 +114,7 @@ void Game::HandleCollisions()
         this->cubes.push_back(cube);
       }
       this->tetromino = Tetromino((TetrominoShape)(rand() % (int)(TETRO_Z + 1)));
-      break;
+      return;
     } 
   }
 }
