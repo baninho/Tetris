@@ -45,12 +45,13 @@ private:
 
 public:
   Tetromino();
+  Tetromino(TetrominoShape shape);
   ~Tetromino();
   void Render(SpriteRenderer &renderer);
   void Update(float dt);
   void Stop();
   void StopX();
-  void Spawn(TetrominoShape type);
+  void Spawn(TetrominoShape shape);
   std::vector<GameObject> get_cubes();
   void Left();
   void Right();

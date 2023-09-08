@@ -4,6 +4,11 @@ Tetromino::Tetromino()
 {
 }
 
+Tetromino::Tetromino(TetrominoShape shape)
+{
+  this->Spawn(shape);
+}
+
 Tetromino::~Tetromino()
 {
 }
@@ -16,9 +21,9 @@ void Tetromino::Render(SpriteRenderer &renderer)
   }
 }
 
-void Tetromino::Spawn(TetrominoShape type)
+void Tetromino::Spawn(TetrominoShape shape)
 {
-  switch (type)
+  switch (shape)
   {
   case TETRO_I:
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE, TETRO_SPEED));

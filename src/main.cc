@@ -26,7 +26,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 const unsigned int SCREEN_WIDTH = 600;
 // The height of the screen
 const unsigned int SCREEN_HEIGHT = 800;
-const int FRAME_DELAY = 10;
+const int FRAME_DELAY = 2;
 
 Game Tetris(SCREEN_WIDTH, SCREEN_HEIGHT);
 int actual_width, actual_height;
