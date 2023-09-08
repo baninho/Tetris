@@ -21,7 +21,7 @@ static const glm::vec3 COLOR_ORANGE = glm::vec3(1.0f, .7f, .0f);
 static const glm::vec3 COLOR_BLUE = glm::vec3(.0f, .0f, 1.0f);
 static const glm::vec3 COLOR_TEAL = glm::vec3(.0f, 1.0f, 1.0f);
 static const glm::vec2 TETRO_SPEED = glm::vec2(.0f, 100.f);
-static const float TETRO_ACCELERATION = 200.f;
+static const float TETRO_ACCELERATION = 400.f;
 static const float TETRO_DECELERATION = 1000.f;
 
 enum TetrominoShape
