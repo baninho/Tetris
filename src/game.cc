@@ -170,11 +170,18 @@ void Game::CheckRowsForCompletion()
   for (int i = 0; i < MAX_CUBE_ROWS; i++)
   {
     if (count[i] >= MAX_CUBE_COLUMNS)
-      for (GameObject &cube : this->cubes)
+    {
+      for (int j = 0; j < this->cubes.size(); j++)
       {
-        if (cube.Row == i)
-          cube.CompletedRow = true;
+        if (this->cubes.at(j).Row == i)
+          this->cubes.at(j).CompletedRow = true;
+        if (this->cubes.at(j).Row < i) 
+        {
+          this->cubes.at(j).Row++;
+          this->cubes.at(j).Position.y += CUBE_SIZE.y;
+        }
       }
+    }
   }
 }
 
