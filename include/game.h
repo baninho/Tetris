@@ -58,6 +58,7 @@ public:
   void Render();
   void HandleCollisions();
   bool DetectCollision(GameObject object, GameObject other);
+  bool CheckPathClear(GameObject object, GameObject other);
 };
 
 #endif

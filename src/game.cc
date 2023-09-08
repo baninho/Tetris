@@ -85,12 +85,7 @@ void Game::HandleCollisions()
       if (this->DetectCollision(cube, other))
       {
         this->tetromino.StopX();
-
-        // check overlap
-        if (cube.Position.x > other.Position.x)
-          clear_below = clear_below && cube.Position.x - other.Position.x > other.Size.x - DELTA_L;
-        if (cube.Position.x < other.Position.x)
-          clear_below = clear_below && other.Position.x - cube.Position.x > cube.Size.x - DELTA_L;
+        clear_below = clear_below && this->CheckPathClear(cube, other);
       }
     }
     for (GameObject &other : this->cubes)
@@ -98,18 +93,20 @@ void Game::HandleCollisions()
       if (this->DetectCollision(cube, other))
       {
         this->tetromino.StopX();
-
-        // check overlap
-        if (cube.Position.x > other.Position.x)
-          clear_below = clear_below && cube.Position.x - other.Position.x > other.Size.x - DELTA_L;
-        if (cube.Position.x < other.Position.x)
-          clear_below = clear_below && other.Position.x - cube.Position.x > cube.Size.x - DELTA_L;
+        clear_below = clear_below && this->CheckPathClear(cube, other);
       }
     }
 
     if (!clear_below)
     {
       this->tetromino.Stop();
+      std::vector<GameObject> temp = this->tetromino.get_cubes();
+      for (GameObject cube : temp) 
+      {
+        this->cubes.push_back(cube);
+      }
+      this->tetromino = Tetromino(TETRO_O);
+      break;
     } 
   }
 }
@@ -124,4 +121,15 @@ bool Game::DetectCollision(GameObject object, GameObject other)
                     other.Position.y + other.Size.y >= object.Position.y;
   // collision only if on both axes
   return collisionX && collisionY;
+}
+
+bool Game::CheckPathClear(GameObject object, GameObject other)
+{
+  bool clear_below = true;
+
+  if (object.Position.x >= other.Position.x)
+    clear_below = clear_below && object.Position.x - other.Position.x > other.Size.x - DELTA_L;
+  if (object.Position.x < other.Position.x)
+    clear_below = clear_below && other.Position.x - object.Position.x > object.Size.x - DELTA_L;
+  return clear_below;
 }
