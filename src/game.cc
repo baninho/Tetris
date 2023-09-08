@@ -11,7 +11,7 @@
 #include <game.h>
 
 Game::Game(unsigned int width, unsigned int height)
-    : State(GAME_ACTIVE), Keys(), Width(width), Height(height)
+    : State(GAME_MENU), Keys(), Width(width), Height(height)
 {
 }
 
@@ -34,7 +34,6 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
-  this->tetromino.Spawn(TETRO_O);
   this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 100.f), ResourceManager::GetTexture("background"))); // floor
   this->objects.push_back(GameObject(glm::vec2(-100.0f, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // left wall
   this->objects.push_back(GameObject(glm::vec2(this->Width, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // right wall
@@ -48,6 +47,11 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
+  if (this->Keys[GLFW_KEY_SPACE] && this->State == GAME_MENU)
+  {
+    this->State = GAME_ACTIVE;
+    this->tetromino.Spawn(TETRO_J);
+  }
   if (this->Keys[GLFW_KEY_S]) 
   {
     this->tetromino.Down();
