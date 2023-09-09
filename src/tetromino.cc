@@ -98,6 +98,11 @@ std::vector<GameObject> &Tetromino::get_cubes()
   return this->cubes;
 }
 
+glm::vec2 Tetromino::get_velocity()
+{
+  return this->velocity;
+}
+
 void Tetromino::Left()
 {
 this->left = true;

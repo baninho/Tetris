@@ -49,6 +49,7 @@ private:
   Tetromino tetromino;
   TextRenderer *text;
   int score, rows_completed_at_once;
+  bool soft_drop;
 
 public:
   // game state
