@@ -36,6 +36,7 @@ void Game::Init()
   renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
   // load textures
   ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
+  ResourceManager::LoadTexture("../textures/menu.jpg", false, "menu");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
   this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 100.f), ResourceManager::GetTexture("background"))); // floor
@@ -88,11 +89,14 @@ void Game::ProcessInput(float dt)
 }
 
 void Game::Render()
-{
-  renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-  
-  if (this->State != GAME_ACTIVE)
+{ 
+  if (this->State != GAME_ACTIVE) 
+  {
+    renderer->DrawSprite(ResourceManager::GetTexture("menu"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
     return;
+  }
+
+  renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
 
   for (GameObject &cube : this->cubes)
   {
