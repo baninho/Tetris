@@ -79,7 +79,7 @@ void Tetromino::Spawn(TetrominoShape shape)
   }
 }
 
-std::vector<GameObject> Tetromino::get_cubes()
+std::vector<GameObject> &Tetromino::get_cubes()
 {
   return this->cubes;
 }

@@ -41,7 +41,7 @@ public:
   void Stop();
   void StopX();
   void Spawn(TetrominoShape shape);
-  std::vector<GameObject> get_cubes();
+  std::vector<GameObject> &get_cubes();
   void Left();
   void Right();
   void Down();
