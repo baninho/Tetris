@@ -39,9 +39,15 @@ void Game::Init()
   ResourceManager::LoadTexture("../textures/menu.jpg", false, "menu");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
+  this->text = new TextRenderer(this->Width, this->Height);
+  this->text->Load("../fonts/ocraext.TTF", 24);
+
   this->objects.push_back(GameObject(glm::vec2(.0f, this->Height), glm::vec2(this->Width, 100.f), ResourceManager::GetTexture("background"))); // floor
   this->objects.push_back(GameObject(glm::vec2(-100.0f, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // left wall
   this->objects.push_back(GameObject(glm::vec2(this->Width, .0f), glm::vec2(100.f, this->Height), ResourceManager::GetTexture("background"))); // right wall
+
+  this->score = 0;
+  this->rows_completed_at_once = 0;
 }
 
 void Game::Update(float dt)
@@ -50,6 +56,7 @@ void Game::Update(float dt)
   {
     this->State = GAME_MENU;
     this->cubes.clear();
+    this->score = 0;
     return;
   }
 
@@ -90,6 +97,8 @@ void Game::ProcessInput(float dt)
 
 void Game::Render()
 { 
+  std::stringstream stream;
+
   if (this->State != GAME_ACTIVE) 
   {
     renderer->DrawSprite(ResourceManager::GetTexture("menu"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
@@ -102,8 +111,11 @@ void Game::Render()
   {
     cube.Draw(*renderer);
   }
+
+  stream << "Score: " << this->score;
   
   this->tetromino.Render(*renderer);
+  this->text->RenderText(stream.str(), 5.f, 5.f, 1.f);
 }
 
 void Game::HandleCollisions()
@@ -148,6 +160,7 @@ void Game::HandleCollisions()
 
     this->CheckRowsForCompletion();
     this->ClearCompletedRows();
+    this->UpdateScore();
 
     this->tetromino = Tetromino(this->RandomShape());
     return;
@@ -223,6 +236,8 @@ void Game::CheckRowsForCompletion()
           cube.Position.y += CUBE_SIZE.y;
         }
       }
+
+      this->rows_completed_at_once++;
     }
   }
 }
@@ -230,6 +245,12 @@ void Game::CheckRowsForCompletion()
 void Game::ClearCompletedRows()
 {
   std::erase_if(this->cubes, Game::CubeInCompletedRow);
+}
+
+void Game::UpdateScore()
+{
+  this->score = this->score + MAX_CUBE_COLUMNS * this->rows_completed_at_once * this->rows_completed_at_once;
+  this->rows_completed_at_once = 0;
 }
 
 TetrominoShape Game::RandomShape()
