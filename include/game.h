@@ -31,9 +31,10 @@
 // Represents the current state of the game
 enum GameState
 {
-  GAME_ACTIVE,
   GAME_MENU,
-  GAME_WIN
+  GAME_ACTIVE,
+  GAME_WIN,
+  GAME_OVER
 };
 
     // Game holds all game-related state and functionality.

@@ -45,6 +45,18 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
+  if (this->State == GAME_OVER)
+  {
+    this->State = GAME_MENU;
+    this->cubes.clear();
+    return;
+  }
+
+  if (this->State == GAME_MENU)
+  {
+    return;
+  }
+
   this->tetromino.Update(dt);
   this->HandleCollisions();
 }
@@ -54,7 +66,7 @@ void Game::ProcessInput(float dt)
   if (this->Keys[GLFW_KEY_SPACE] && this->State == GAME_MENU)
   {
     this->State = GAME_ACTIVE;
-    this->tetromino.Spawn(this->RandomShape());
+    this->tetromino = Tetromino(this->RandomShape());
   }
   if (this->Keys[GLFW_KEY_S]) 
   {
@@ -78,10 +90,15 @@ void Game::ProcessInput(float dt)
 void Game::Render()
 {
   renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-  for (int i = 0; i < this->cubes.size(); i++)
+  
+  if (this->State != GAME_ACTIVE)
+    return;
+
+  for (GameObject &cube : this->cubes)
   {
-    this->cubes.at(i).Draw(*renderer);
+    cube.Draw(*renderer);
   }
+  
   this->tetromino.Render(*renderer);
 }
 
@@ -108,26 +125,32 @@ void Game::HandleCollisions()
         clear_below = clear_below && this->CheckPathClear(cube, other);
       }
     }
+  }
 
-    if (!clear_below)
+  if (!clear_below)
+  {
+    this->tetromino.Stop();
+    for (GameObject &cube : this->tetromino.get_cubes())
     {
-      this->tetromino.Stop();
-      std::vector<GameObject> temp = this->tetromino.get_cubes();
-      for (GameObject &cube : temp) 
+      if (cube.Position.y < DELTA_L) // new tetromino immediately collided with stack
       {
-        cube.Row = round(cube.Position.y / CUBE_SIZE.y);
-        this->cubes.push_back(cube);
+        this->State = GAME_OVER;
+        return;
       }
 
-      this->CheckRowsForCompletion();
-      this->ClearCompletedRows();
-
-      this->tetromino = Tetromino(this->RandomShape());
-      return;
-    } else 
-    {
-      this->tetromino.Continue();
+      cube.Row = round(cube.Position.y / CUBE_SIZE.y);
+      this->cubes.push_back(cube);
     }
+
+    this->CheckRowsForCompletion();
+    this->ClearCompletedRows();
+
+    this->tetromino = Tetromino(this->RandomShape());
+    return;
+  }
+  else
+  {
+    this->tetromino.Continue();
   }
 }
 
