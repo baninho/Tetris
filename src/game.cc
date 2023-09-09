@@ -145,7 +145,9 @@ void Game::HandleCollisions()
 
   if (!clear_below)
   {
+    this->soft_drop = this->tetromino.get_velocity().y > TETRO_MAX_SPEED / 2.f;
     this->tetromino.Stop();
+
     for (GameObject &cube : this->tetromino.get_cubes())
     {
       if (cube.Position.y < DELTA_L) // new tetromino immediately collided with stack
@@ -251,6 +253,11 @@ void Game::UpdateScore()
 {
   this->score = this->score + MAX_CUBE_COLUMNS * this->rows_completed_at_once * this->rows_completed_at_once;
   this->rows_completed_at_once = 0;
+  if (this->soft_drop)
+  {
+    this->score++;
+    this->soft_drop = false;
+  }
 }
 
 TetrominoShape Game::RandomShape()

@@ -57,6 +57,7 @@ public:
   void Continue();
   void Spawn(TetrominoShape shape);
   std::vector<GameObject> &get_cubes();
+  glm::vec2 get_velocity();
   void Left();
   void Right();
   void Down();
