@@ -35,7 +35,7 @@ void Game::Init()
   // set render-specific controls
   renderer = new SpriteRenderer(ResourceManager::GetShader("sprite"));
   // load textures
-  ResourceManager::LoadTexture("../textures/background.jpg", false, "background");
+  ResourceManager::LoadTexture("../textures/background2.jpg", false, "background");
   ResourceManager::LoadTexture("../textures/menu.jpg", false, "menu");
   ResourceManager::LoadTexture("../textures/block.png", false, "block");
 
@@ -74,6 +74,7 @@ void Game::ProcessInput(float dt)
   if (this->Keys[GLFW_KEY_SPACE] && this->State == GAME_MENU)
   {
     this->State = GAME_ACTIVE;
+    this->UpdateNextTetro();
     this->tetromino = Tetromino(this->RandomShape());
   }
   if (this->Keys[GLFW_KEY_S]) 
@@ -115,6 +116,7 @@ void Game::Render()
   stream << "Score: " << this->score;
   
   this->tetromino.Render(*renderer);
+  this->next_tetro.Render(*renderer);
   this->text->RenderText(stream.str(), 5.f, 5.f, 1.f);
 }
 
@@ -164,7 +166,8 @@ void Game::HandleCollisions()
     this->ClearCompletedRows();
     this->UpdateScore();
 
-    this->tetromino = Tetromino(this->RandomShape());
+    this->tetromino = Tetromino(this->next_shape);
+    this->UpdateNextTetro();
     return;
   }
   else
@@ -258,6 +261,13 @@ void Game::UpdateScore()
     this->score++;
     this->soft_drop = false;
   }
+}
+
+void Game::UpdateNextTetro()
+{
+  this->next_shape = this->RandomShape();
+  this->next_tetro = Tetromino(this->next_shape);
+  this->next_tetro.MoveToNextTetroPosition();
 }
 
 TetrominoShape Game::RandomShape()

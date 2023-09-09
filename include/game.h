@@ -46,10 +46,11 @@ enum GameState
 private:
   SpriteRenderer *renderer;
   std::vector<GameObject> cubes, objects;
-  Tetromino tetromino;
+  Tetromino tetromino, next_tetro;
   TextRenderer *text;
   int score, rows_completed_at_once;
   bool soft_drop;
+  TetrominoShape next_shape;
 
 public:
   // game state
@@ -73,6 +74,7 @@ public:
   void CheckRowsForCompletion();
   void ClearCompletedRows();
   void UpdateScore();
+  void UpdateNextTetro();
   TetrominoShape RandomShape();
 };
 
