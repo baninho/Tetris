@@ -203,3 +203,8 @@ void Tetromino::StopX()
     cube.Position.x = CUBE_SIZE.x * round(cube.Position.x / CUBE_SIZE.x);
   }
 }
+
+void Tetromino::Continue()
+{
+  this->stopped = false;
+}

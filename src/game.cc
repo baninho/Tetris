@@ -124,7 +124,10 @@ void Game::HandleCollisions()
 
       this->tetromino = Tetromino(this->RandomShape());
       return;
-    } 
+    } else 
+    {
+      this->tetromino.Continue();
+    }
   }
 }
 

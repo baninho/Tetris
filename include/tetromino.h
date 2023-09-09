@@ -54,6 +54,7 @@ public:
   void Update(float dt);
   void Stop();
   void StopX();
+  void Continue();
   void Spawn(TetrominoShape shape);
   std::vector<GameObject> &get_cubes();
   void Left();
