@@ -48,6 +48,8 @@ private:
   std::vector<GameObject> cubes, objects;
   Tetromino tetromino;
   TextRenderer *text;
+  int score, rows_completed_at_once;
+  bool soft_drop;
 
 public:
   // game state
@@ -70,6 +72,7 @@ public:
   static bool CubeInCompletedRow(GameObject &cube);
   void CheckRowsForCompletion();
   void ClearCompletedRows();
+  void UpdateScore();
   TetrominoShape RandomShape();
 };
 
