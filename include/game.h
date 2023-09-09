@@ -27,6 +27,7 @@
 #include "../glm/glm.hpp"
 #include "../glm/gtc/matrix_transform.hpp"
 #include "constants.h"
+#include "text_renderer.h"
 
 // Represents the current state of the game
 enum GameState
@@ -45,7 +46,8 @@ enum GameState
 private:
   SpriteRenderer *renderer;
   std::vector<GameObject> cubes, objects;
-  Tetromino tetromino; 
+  Tetromino tetromino;
+  TextRenderer *text;
 
 public:
   // game state
