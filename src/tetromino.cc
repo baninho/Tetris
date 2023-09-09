@@ -40,10 +40,10 @@ void Tetromino::Spawn(TetrominoShape shape)
   switch (shape)
   {
   case TETRO_I:
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
+    this->cubes.push_back(GameObject(glm::vec2(200.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 120.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
+    this->cubes.push_back(GameObject(glm::vec2(320.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_TEAL));
     break;
 
   case TETRO_J:
@@ -61,31 +61,31 @@ void Tetromino::Spawn(TetrominoShape shape)
     break;
 
   case TETRO_O:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
     this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_YELLOW));
     break;
 
   case TETRO_S:
-    this->cubes.push_back(GameObject(glm::vec2(320.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
+    this->cubes.push_back(GameObject(glm::vec2(320.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_GREEN));
     break;
 
   case TETRO_T:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
-    this->cubes.push_back(GameObject(glm::vec2(320.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
+    this->cubes.push_back(GameObject(glm::vec2(320.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_PUPLE));
     break;
 
   case TETRO_Z:
-    this->cubes.push_back(GameObject(glm::vec2(240.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
-    this->cubes.push_back(GameObject(glm::vec2(280.0f, 0.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
+    this->cubes.push_back(GameObject(glm::vec2(240.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
     this->cubes.push_back(GameObject(glm::vec2(280.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
-    this->cubes.push_back(GameObject(glm::vec2(320.0f, 40.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
+    this->cubes.push_back(GameObject(glm::vec2(280.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
+    this->cubes.push_back(GameObject(glm::vec2(320.0f, 80.0f), CUBE_SIZE, ResourceManager::GetTexture("block"), COLOR_RED));
     break;
 
   default:
@@ -141,6 +141,17 @@ void Tetromino::SnapToGrid()
   {
     cube.Position = CUBE_SIZE * round(cube.Position / CUBE_SIZE);
   }
+}
+
+void Tetromino::MoveToNextTetroPosition()
+{
+  for (GameObject &cube : this->cubes)
+  {
+    cube.Position.x += 220.f;
+    cube.Position.y += 20.f;
+  }
+
+  this->stopped = true;
 }
 
 void Tetromino::Update(float dt)

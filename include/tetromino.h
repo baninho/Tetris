@@ -63,6 +63,7 @@ public:
   void Down();
   void Rotate();
   void SnapToGrid();
+  void MoveToNextTetroPosition();
 };
 
 #endif
