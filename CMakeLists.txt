@@ -19,9 +19,6 @@ set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory(glfw-3.3.8)
-# find_package(PNG REQUIRED) 
-# find_package(BZIP2 REQUIRED)
-# find_package(ZLIB REQUIRED)
 find_package(FREETYPE REQUIRED)
 target_link_libraries(Tetris 
   glfw 
