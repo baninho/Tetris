@@ -18,15 +18,11 @@
 #include <thread>
 #include <chrono>
 
+#include "constants.h"
+
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
-
-// The Width of the screen
-const unsigned int SCREEN_WIDTH = 600;
-// The height of the screen
-const unsigned int SCREEN_HEIGHT = 800;
-const int FRAME_DELAY = 3;
 
 Game Tetris(SCREEN_WIDTH, SCREEN_HEIGHT);
 int actual_width, actual_height;

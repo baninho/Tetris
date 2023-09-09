@@ -16,5 +16,8 @@ static const float TETRO_MAX_SPEED = 600.f;
 static const float DELTA_L = 10.f;
 static const int MAX_CUBE_ROWS = 20;
 static const int MAX_CUBE_COLUMNS = 15;
+static const int FRAME_DELAY = 3;
+static const unsigned int SCREEN_WIDTH = 600;
+static const unsigned int SCREEN_HEIGHT = 800;
 
 #endif
