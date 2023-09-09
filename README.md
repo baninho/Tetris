@@ -1,5 +1,5 @@
 # Tetris
-Tetris clone using no engine, plain OpenGL. Target is MacOS.
+Tetris clone using OpenGL. Target is MacOS.
 ## How to build & run
 In the repo's root directory run
 ```
