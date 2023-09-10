@@ -78,21 +78,22 @@ void Game::ProcessInput(float dt)
       this->score = 0;
     }
   }
-  if (this->Keys[GLFW_KEY_S]) 
+  if (this->Keys[GLFW_KEY_S] || this->Keys[GLFW_KEY_DOWN]) 
   {
     this->tetromino.Down();
   }
-  if (this->Keys[GLFW_KEY_A])
+  if (this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT])
   {
     this->tetromino.Left();
   }
-  if (this->Keys[GLFW_KEY_D])
+  if (this->Keys[GLFW_KEY_D] || this->Keys[GLFW_KEY_RIGHT])
   {
     this->tetromino.Right();
   }
-  if (this->Keys[GLFW_KEY_W])
+  if (this->Keys[GLFW_KEY_W] || this->Keys[GLFW_KEY_UP])
   {
     this->Keys[GLFW_KEY_W] = false;
+    this->Keys[GLFW_KEY_UP] = false;
     this->tetromino.Rotate();
   }
 }
