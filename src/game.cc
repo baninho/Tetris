@@ -115,9 +115,9 @@ void Game::Render()
 
   stream << "Score: " << this->score;
   
-  this->tetromino.Render(*renderer);
-  this->next_tetro.Render(*renderer);
   this->text->RenderText(stream.str(), 5.f, 5.f, 1.f);
+  this->next_tetro.Render(*renderer);
+  this->tetromino.Render(*renderer);
 }
 
 void Game::HandleCollisions()
