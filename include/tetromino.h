@@ -46,10 +46,14 @@ private:
   glm::vec2 velocity;
   TetrominoShape shape;
 
+  void moveToNextTetroPosition();
+  void snapToGrid();
+
 public:
   Tetromino();
   Tetromino(TetrominoShape shape);
   ~Tetromino();
+
   void Render(SpriteRenderer &renderer);
   void Update(float dt);
   void Stop();
@@ -62,8 +66,7 @@ public:
   void Right();
   void Down();
   void Rotate();
-  void SnapToGrid();
-  void MoveToNextTetroPosition();
+  void MakeNextTetro();
 };
 
 #endif

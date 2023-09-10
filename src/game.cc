@@ -267,7 +267,7 @@ void Game::UpdateNextTetro()
 {
   this->next_shape = this->RandomShape();
   this->next_tetro = Tetromino(this->next_shape);
-  this->next_tetro.MoveToNextTetroPosition();
+  this->next_tetro.MakeNextTetro();
 }
 
 TetrominoShape Game::RandomShape()

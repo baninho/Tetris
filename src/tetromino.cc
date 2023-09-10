@@ -135,7 +135,12 @@ void Tetromino::Rotate()
   }
 }
 
-void Tetromino::SnapToGrid()
+void Tetromino::MakeNextTetro()
+{
+  this->moveToNextTetroPosition();
+}
+
+void Tetromino::snapToGrid()
 {
   for (GameObject &cube : this->cubes)
   {
@@ -143,7 +148,7 @@ void Tetromino::SnapToGrid()
   }
 }
 
-void Tetromino::MoveToNextTetroPosition()
+void Tetromino::moveToNextTetroPosition()
 {
   for (GameObject &cube : this->cubes)
   {
@@ -206,7 +211,7 @@ void Tetromino::Update(float dt)
 void Tetromino::Stop()
 {
   this->stopped = true;
-  this->SnapToGrid();
+  this->snapToGrid();
 }
 
 void Tetromino::StopX()
