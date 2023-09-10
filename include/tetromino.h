@@ -48,6 +48,7 @@ private:
 
   void moveToNextTetroPosition();
   void snapToGrid();
+  void dimColor(float color_fraction);
 
 public:
   Tetromino();

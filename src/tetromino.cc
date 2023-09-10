@@ -138,6 +138,7 @@ void Tetromino::Rotate()
 void Tetromino::MakeNextTetro()
 {
   this->moveToNextTetroPosition();
+  this->dimColor(.33f);
 }
 
 void Tetromino::snapToGrid()
@@ -145,6 +146,14 @@ void Tetromino::snapToGrid()
   for (GameObject &cube : this->cubes)
   {
     cube.Position = CUBE_SIZE * round(cube.Position / CUBE_SIZE);
+  }
+}
+
+void Tetromino::dimColor(float color_fraction)
+{
+  for (GameObject &cube : this->cubes)
+  {
+    cube.Color = color_fraction * cube.Color + (1.f - color_fraction) * glm::vec3(.67f);
   }
 }
 
