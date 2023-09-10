@@ -52,15 +52,7 @@ void Game::Init()
 
 void Game::Update(float dt)
 {
-  if (this->State == GAME_OVER)
-  {
-    this->State = GAME_MENU;
-    this->cubes.clear();
-    this->score = 0;
-    return;
-  }
-
-  if (this->State == GAME_MENU)
+  if (this->State != GAME_ACTIVE)
   {
     return;
   }
@@ -71,11 +63,20 @@ void Game::Update(float dt)
 
 void Game::ProcessInput(float dt)
 {
-  if (this->Keys[GLFW_KEY_SPACE] && this->State == GAME_MENU)
+  if (this->Keys[GLFW_KEY_SPACE])
   {
-    this->State = GAME_ACTIVE;
-    this->UpdateNextTetro();
-    this->tetromino = Tetromino(this->RandomShape());
+    if (this->State == GAME_MENU) 
+    {
+      this->State = GAME_ACTIVE;
+      this->UpdateNextTetro();
+      this->tetromino = Tetromino(this->RandomShape());
+    }
+    if (this->State == GAME_OVER) 
+    {
+      this->State = GAME_MENU;
+      this->cubes.clear();
+      this->score = 0;
+    }
   }
   if (this->Keys[GLFW_KEY_S]) 
   {
@@ -100,24 +101,34 @@ void Game::Render()
 { 
   std::stringstream stream;
 
-  if (this->State != GAME_ACTIVE) 
+  stream << "Score: " << this->score;
+
+  if (this->State == GAME_MENU) 
   {
     renderer->DrawSprite(ResourceManager::GetTexture("menu"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
     return;
   }
 
-  renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
-
-  for (GameObject &cube : this->cubes)
+  if (this->State == GAME_OVER)
   {
-    cube.Draw(*renderer);
+    renderer->DrawSprite(ResourceManager::GetTexture("menu"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
+    this->text->RenderText(stream.str(), 200.f, 195.f, 1.f);
+    this->text->RenderText("GAME OVER", 200.f, 135.f, 1.5f);
+    return;
   }
 
-  stream << "Score: " << this->score;
-  
-  this->text->RenderText(stream.str(), 5.f, 5.f, 1.f);
-  this->next_tetro.Render(*renderer);
-  this->tetromino.Render(*renderer);
+  if (this->State == GAME_ACTIVE)
+  {
+    renderer->DrawSprite(ResourceManager::GetTexture("background"), glm::vec2(0.0f, 0.0f), glm::vec2(this->Width, this->Height), 0.0f);
+
+    for (GameObject &cube : this->cubes)
+    {
+      cube.Draw(*renderer);
+    }
+    this->text->RenderText(stream.str(), 5.f, 5.f, 1.f);
+    this->next_tetro.Render(*renderer);
+    this->tetromino.Render(*renderer);
+  }
 }
 
 void Game::HandleCollisions()
