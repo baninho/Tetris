@@ -38,6 +38,12 @@ enum TetrominoShape
   TETRO_Z
 };
 
+enum TetroDirection
+{
+  TETRO_LEFT,
+  TETRO_RIGHT
+};
+
 class Tetromino 
 {
 private:
@@ -68,6 +74,7 @@ public:
   void Down();
   void Rotate();
   void MakeNextTetro();
+  void LastSecondMove(TetroDirection direction);
 };
 
 #endif

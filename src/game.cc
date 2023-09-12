@@ -161,6 +161,16 @@ void Game::HandleCollisions()
   {
     this->soft_drop = this->tetromino.get_velocity().y > TETRO_MAX_SPEED / 2.f;
     this->tetromino.Stop();
+    if 
+    (
+      this->Keys[GLFW_KEY_A] 
+      || this->Keys[GLFW_KEY_LEFT] 
+      || this->Keys[GLFW_KEY_D] 
+      || this->Keys[GLFW_KEY_RIGHT]
+    )
+    {
+      this->tetromino.LastSecondMove(this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT] ? TETRO_LEFT : TETRO_RIGHT);
+    }
 
     for (GameObject &cube : this->tetromino.get_cubes())
     {
