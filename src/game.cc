@@ -169,7 +169,10 @@ void Game::HandleCollisions()
       || this->Keys[GLFW_KEY_RIGHT]
     )
     {
-      this->tetromino.LastSecondMove(this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT] ? TETRO_LEFT : TETRO_RIGHT);
+      if (this->CheckTetroClearLeft() && (this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT]))
+        this->tetromino.LastSecondMove(TETRO_LEFT);
+      if (this->CheckTetroClearRight() && (this->Keys[GLFW_KEY_D] || this->Keys[GLFW_KEY_RIGHT]))
+        this->tetromino.LastSecondMove(TETRO_RIGHT);
     }
 
     for (GameObject &cube : this->tetromino.get_cubes())
@@ -208,6 +211,73 @@ bool Game::DetectCollision(GameObject object, GameObject other)
                     other.Position.y + other.Size.y >= object.Position.y;
   // collision only if on both axes
   return collisionX && collisionY;
+}
+
+bool Game::CheckClearLeft(GameObject object, GameObject other)
+{
+  bool clear_left = true;
+
+  if (object.Position.x >= other.Position.x + other.Size.x + object.Size.x 
+    || object.Position.x + object.Size.x < other.Position.x)
+    return true;
+  if (object.Position.y >= other.Position.y)
+    clear_left = clear_left && object.Position.y - other.Position.y > other.Size.y - DELTA_L;
+  if (object.Position.y < other.Position.y)
+    clear_left = clear_left && other.Position.y - object.Position.y > object.Size.y - DELTA_L;
+
+  return clear_left;
+}
+
+bool Game::CheckTetroClearLeft()
+{
+  bool tetro_clear_left = true;
+
+  for (GameObject &cube : this->tetromino.get_cubes())
+  {
+    for (GameObject &other : this->objects) // check wall collision
+    {
+      tetro_clear_left = tetro_clear_left && this->CheckClearLeft(cube, other);
+    }
+    for (GameObject &other : this->cubes) // check the stack for collision
+    {
+      tetro_clear_left = tetro_clear_left && this->CheckClearLeft(cube, other);
+    }
+  }
+
+  return tetro_clear_left;
+}
+
+bool Game::CheckClearRight(GameObject object, GameObject other)
+{
+  bool clear_right = true;
+
+  if (object.Position.x >= other.Position.x + other.Size.x || object.Position.x + 2 * object.Size.x <= other.Position.x)
+    return true;
+
+  if (object.Position.y >= other.Position.y)
+    clear_right = clear_right && object.Position.y - other.Position.y > other.Size.y - DELTA_L;
+  if (object.Position.y < other.Position.y)
+    clear_right = clear_right && other.Position.y - object.Position.y > object.Size.y - DELTA_L;
+
+  return clear_right;
+}
+
+bool Game::CheckTetroClearRight()
+{
+  bool tetro_clear_right = true;
+
+  for (GameObject &cube : this->tetromino.get_cubes())
+  {
+    for (GameObject &other : this->objects) // check wall collision
+    {
+      tetro_clear_right = tetro_clear_right && this->CheckClearRight(cube, other);
+    }
+    for (GameObject &other : this->cubes) // check the stack for collision
+    {
+      tetro_clear_right = tetro_clear_right && this->CheckClearRight(cube, other);
+    }
+  }
+  return tetro_clear_right;
 }
 
 bool Game::CheckPathClear(GameObject object, GameObject other)
