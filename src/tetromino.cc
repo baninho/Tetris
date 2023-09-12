@@ -143,7 +143,6 @@ void Tetromino::MakeNextTetro()
 
 void Tetromino::LastSecondMove(TetroDirection direction)
 {
-  printf("last second move: %d\n", direction);
   for (GameObject &cube : this->cubes)
   {
     cube.Position.x += direction == TETRO_RIGHT ? CUBE_SIZE.x : -CUBE_SIZE.x;
