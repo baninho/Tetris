@@ -296,7 +296,7 @@ bool Game::CubeInCompletedRow(GameObject &cube)
   return cube.CompletedRow;
 }
 
-// the idea is to simply count the cubes in every row 
+// the idea is to count the cubes in every row 
 // then check if any rows had all columns filled
 // and mark the cubes in that row for clearing
 // and slide the other rows down
