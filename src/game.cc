@@ -169,9 +169,9 @@ void Game::HandleCollisions()
       || this->Keys[GLFW_KEY_RIGHT]
     )
     {
-      if (this->CheckTetroClearLeft() && (this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT]))
+      if (this->CheckTetroClearLeftChanged() && (this->Keys[GLFW_KEY_A] || this->Keys[GLFW_KEY_LEFT]))
         this->tetromino.LastSecondMove(TETRO_LEFT);
-      if (this->CheckTetroClearRight() && (this->Keys[GLFW_KEY_D] || this->Keys[GLFW_KEY_RIGHT]))
+      if (this->CheckTetroClearRightChanged() && (this->Keys[GLFW_KEY_D] || this->Keys[GLFW_KEY_RIGHT]))
         this->tetromino.LastSecondMove(TETRO_RIGHT);
     }
 
@@ -228,9 +228,16 @@ bool Game::CheckClearLeft(GameObject object, GameObject other)
   return clear_left;
 }
 
-bool Game::CheckTetroClearLeft()
+bool Game::CheckTetroClearLeftChanged()
+/**
+ * check if the tetromino is clear to move to the left
+ * and if it was not one space upwards in the grid
+ * so the tetromino can slide into a gap on the left
+ * but not to the left on top of the stack 
+ * (and get stuck in the air)
+*/
 {
-  bool tetro_clear_left = true;
+  bool tetro_clear_left = true, tetro_blocked_above_left = false;
 
   for (GameObject &cube : this->tetromino.get_cubes())
   {
@@ -244,7 +251,26 @@ bool Game::CheckTetroClearLeft()
     }
   }
 
-  return tetro_clear_left;
+  // move the tetromino up to check for collision one space above
+  // move it back down right after before checking collision again 
+  // (or anything else)
+  this->tetromino.Move(TETRO_UP);
+
+  for (GameObject &cube : this->tetromino.get_cubes())
+  {
+    for (GameObject &other : this->objects) // check wall collision
+    {
+      tetro_blocked_above_left = tetro_blocked_above_left || !this->CheckClearLeft(cube, other);
+    }
+    for (GameObject &other : this->cubes) // check the stack for collision
+    {
+      tetro_blocked_above_left = tetro_blocked_above_left || !this->CheckClearLeft(cube, other);
+    }
+  }
+
+  this->tetromino.Move(TETRO_DOWN);
+
+  return tetro_clear_left && tetro_blocked_above_left;
 }
 
 bool Game::CheckClearRight(GameObject object, GameObject other)
@@ -262,9 +288,16 @@ bool Game::CheckClearRight(GameObject object, GameObject other)
   return clear_right;
 }
 
-bool Game::CheckTetroClearRight()
+bool Game::CheckTetroClearRightChanged()
+/**
+ * check if the tetromino is clear to move to the right
+ * and if it was not one space upwards in the grid
+ * so the tetromino can slide into a gap on the right
+ * but not to the right on top of the stack
+ * (and get stuck in the air)
+ */
 {
-  bool tetro_clear_right = true;
+  bool tetro_clear_right = true, tetro_blocked_above_right = false;
 
   for (GameObject &cube : this->tetromino.get_cubes())
   {
@@ -277,7 +310,27 @@ bool Game::CheckTetroClearRight()
       tetro_clear_right = tetro_clear_right && this->CheckClearRight(cube, other);
     }
   }
-  return tetro_clear_right;
+
+  // move the tetromino up to check for collision one space above
+  // move it back down right after before checking collision again
+  // (or anything else)
+  this->tetromino.Move(TETRO_UP);
+
+  for (GameObject &cube : this->tetromino.get_cubes())
+  {
+    for (GameObject &other : this->objects) // check wall collision
+    {
+      tetro_blocked_above_right = tetro_blocked_above_right || !this->CheckClearRight(cube, other);
+    }
+    for (GameObject &other : this->cubes) // check the stack for collision
+    {
+      tetro_blocked_above_right = tetro_blocked_above_right || !this->CheckClearRight(cube, other);
+    }
+  }
+
+  this->tetromino.Move(TETRO_DOWN);
+
+  return tetro_clear_right && tetro_blocked_above_right;
 }
 
 bool Game::CheckPathClear(GameObject object, GameObject other)
