@@ -308,7 +308,8 @@ void Game::CheckRowsForCompletion()
           0, 0, 0, 0,
           0, 0, 0, 0,
           0, 0, 0, 0,
-          0, 0, 0, 0};
+          0, 0, 0, 0
+      };
 
   for (GameObject &cube : this->cubes)
   {
