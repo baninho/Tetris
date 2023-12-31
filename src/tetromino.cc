@@ -105,12 +105,12 @@ glm::vec2 Tetromino::get_velocity()
 
 void Tetromino::Left()
 {
-this->left = true;
+  this->left = true;
 }
 
 void Tetromino::Right()
 {
-this->right = true;
+  this->right = true;
 }
 
 void Tetromino::Down()
@@ -139,6 +139,47 @@ void Tetromino::MakeNextTetro()
 {
   this->moveToNextTetroPosition();
   this->dimColor(.33f);
+}
+
+void Tetromino::LastSecondMove(TetroDirection direction)
+{
+  for (GameObject &cube : this->cubes)
+  {
+    cube.Position.x += direction == TETRO_RIGHT ? CUBE_SIZE.x : -CUBE_SIZE.x;
+  }
+}
+
+void Tetromino::Move(TetroDirection direction)
+{
+  switch (direction) 
+  {
+    case TETRO_UP:
+      for (GameObject &cube : this->cubes)
+      {
+        cube.Position.y -= CUBE_SIZE.y;
+      }
+      break;
+    case TETRO_DOWN:
+      for (GameObject &cube : this->cubes)
+      {
+        cube.Position.y += CUBE_SIZE.y;
+      }
+      break;
+    case TETRO_LEFT:
+      for (GameObject &cube : this->cubes)
+      {
+        cube.Position.x -= CUBE_SIZE.x;
+      }
+      break;
+    case TETRO_RIGHT:
+      for (GameObject &cube : this->cubes)
+      {
+        cube.Position.x += CUBE_SIZE.x;
+      }
+      break;
+    default:
+      break;
+  }
 }
 
 void Tetromino::snapToGrid()

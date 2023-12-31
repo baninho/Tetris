@@ -72,6 +72,10 @@ public:
   static bool CubeInCompletedRow(GameObject &cube);
   void CheckRowsForCompletion();
   void ClearCompletedRows();
+  bool CheckClearLeft(GameObject object, GameObject other);
+  bool CheckClearRight(GameObject object, GameObject other);
+  bool CheckTetroClearLeftChanged();
+  bool CheckTetroClearRightChanged();
   void UpdateScore();
   void UpdateNextTetro();
   TetrominoShape RandomShape();
